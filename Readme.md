@@ -1,4 +1,5 @@
-# Custom HTTP Web Server using C++ Sockets
+# Socket Web Server (C++ | TCP | HTTP)
+
 
 ## Overview
 This project implements a lightweight HTTP web server from scratch using C++ socket programming.
