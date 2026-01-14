@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Source Code - Srishti's Project</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- SAME TECH THEME --- */
+        :root {
+            --bg-color: #050505;
+            --card-bg: rgba(20, 20, 20, 0.8);
+            --primary-color: #00ff41;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --glow: 0 0 10px rgba(0, 255, 65, 0.5), 0 0 20px rgba(0, 255, 65, 0.3);
+        }
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 50% 0%, rgba(0, 255, 65, 0.15) 0%, transparent 50%);
+            color: var(--text-main);
+            display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; overflow-x: hidden;
+        }
+        .container {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+            max-width: 1000px; width: 100%; position: relative; overflow: hidden; backdrop-filter: blur(5px);
+        }
+        .container::before { content: ''; position: absolute; top: 0; left: 0; width: 100px; height: 2px; background: var(--primary-color); box-shadow: var(--glow); }
+        .container::after { content: ''; position: absolute; bottom: 0; right: 0; width: 100px; height: 2px; background: var(--primary-color); box-shadow: var(--glow); }
+        
+        .header { text-align: center; padding: 3em; border-bottom: 1px solid rgba(0, 255, 65, 0.1); }
+        .header h1 { font-family: 'Orbitron', sans-serif; font-size: 2.5em; color: white; text-transform: uppercase; letter-spacing: 3px; margin: 0; }
+        .main-content { padding: 3em; }
+        
+        .code-block {
+            background: #0a0a0a;
+            border-left: 3px solid var(--primary-color);
+            padding: 1.5em;
+            margin-bottom: 1.5em;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+        .code-block:hover { background: #111; box-shadow: inset 0 0 20px rgba(0,255,65,0.05); }
+        
+        .code-block h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary-color);
+            margin: 0 0 0.5em 0;
+            font-size: 1.1em;
+        }
+        .code-block p { color: var(--text-muted); margin: 0; font-size: 1em; line-height: 1.5; }
+        .keyword { color: #ff00ff; font-weight: bold; } /* New Highlighting */
+
+        nav { background: rgba(0, 0, 0, 0.6); padding: 1.5em; display: flex; justify-content: center; gap: 2em; border-top: 1px solid rgba(0, 255, 65, 0.1); flex-wrap: wrap; }
+        nav a { text-decoration: none; color: var(--text-muted); font-family: 'Orbitron', sans-serif; font-size: 0.9em; text-transform: uppercase; padding: 0.8em 1.5em; transition: 0.3s; letter-spacing: 1px; }
+        nav a:hover { color: var(--primary-color); text-shadow: var(--glow); }
+        nav a.active { background: var(--primary-color); color: black; font-weight: 700; box-shadow: var(--glow); }
+        
+        body::before { content: " "; display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); z-index: 2; background-size: 100% 2px, 3px 100%; pointer-events: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Deep Code Analysis</h1>
+        </header>
+
+        <main class="main-content">
+            <div class="code-block">
+                <h3>1. Header Inclusion & Library Linking</h3>
+                <p>We begin by importing <code>&lt;winsock2.h&gt;</code>, the core API for Windows networking. The directive <code>#pragma comment(lib, "ws2_32.lib")</code> is crucial—it tells the linker to include the actual implementation code for sockets, preventing "undefined reference" errors during compilation.</p>
+            </div>
+
+            <div class="code-block">
+                <h3>2. Socket Instantiation (The 'Phone')</h3>
+                <p>The line <code>socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)</code> creates the endpoint. 
+                <br>- <span class="keyword">AF_INET</span>: Declares we are using IPv4 addresses (e.g., 127.0.0.1).
+                <br>- <span class="keyword">SOCK_STREAM</span>: Selects TCP protocol, ensuring data arrives in order and without errors, unlike UDP.</p>
+            </div>
+
+            <div class="code-block">
+                <h3>3. Binding & Listening (The 'SIM Card')</h3>
+                <p>Before receiving calls, we must assign a phone number. <code>bind()</code> attaches our socket to <strong>Port 8080</strong>. We use <code>htons(8080)</code> to convert the port number to "Network Byte Order" (Big Endian) so the internet can understand it. Finally, <code>listen()</code> puts the socket in a passive mode, ready to accept incoming connection requests.</p>
+            </div>
+
+            <div class="code-block">
+                <h3>4. Request Parsing logic (The 'Brain')</h3>
+                <p>When <code>recv()</code> captures the raw bytes: "GET /about.html HTTP/1.1...", we convert it to a <code>std::string</code>. We then use string manipulation (<code>find()</code> and <code>substr()</code>) to slice out exactly "/about.html". This logic is the heart of the server routing mechanism.</p>
+            </div>
+            
+            <div class="code-block">
+                <h3>5. Response Construction (The 'Reply')</h3>
+                <p>We don't just send the file; we must follow protocol. We first construct an HTTP Header containing status codes (<code>200 OK</code>) and metadata (<code>Content-Length</code>). Only after sending this header do we stream the actual binary data of the HTML file using <code>send()</code>.</p>
+            </div>
+        </main>
+
+        <nav>
+            <a href="/">Main</a>
+            <a href="/about.html">Logic</a>
+            <a href="/code.html" class="active">Code</a>
+            <a href="/ai_tutor.html">AI-Link</a>
+            <a href="/future_scope.html">Future</a>
+            <a href="/thankyou.html">End</a>
+        </nav>
+    </div>
+</body>
+</html>

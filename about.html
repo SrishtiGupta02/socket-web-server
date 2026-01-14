@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logic - Srishti's Project</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- SAME TECH THEME --- */
+        :root {
+            --bg-color: #050505;
+            --card-bg: rgba(20, 20, 20, 0.8);
+            --primary-color: #00ff41;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --glow: 0 0 10px rgba(0, 255, 65, 0.5), 0 0 20px rgba(0, 255, 65, 0.3);
+        }
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 50% 0%, rgba(0, 255, 65, 0.15) 0%, transparent 50%);
+            color: var(--text-main);
+            display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; overflow-x: hidden;
+        }
+        .container {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+            max-width: 1000px; width: 100%; position: relative; overflow: hidden; backdrop-filter: blur(5px);
+        }
+        .container::before { content: ''; position: absolute; top: 0; left: 0; width: 100px; height: 2px; background: var(--primary-color); box-shadow: var(--glow); }
+        .container::after { content: ''; position: absolute; bottom: 0; right: 0; width: 100px; height: 2px; background: var(--primary-color); box-shadow: var(--glow); }
+        
+        .header { text-align: center; padding: 3em; border-bottom: 1px solid rgba(0, 255, 65, 0.1); }
+        .header h1 { font-family: 'Orbitron', sans-serif; font-size: 2.5em; color: white; text-transform: uppercase; letter-spacing: 3px; margin: 0; }
+
+        .main-content { padding: 3em; }
+        
+        .steps-grid { display: grid; grid-template-columns: 1fr; gap: 2em; }
+        @media (min-width: 768px) { .steps-grid { grid-template-columns: 1fr 1fr; } }
+
+        .step-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 2em; position: relative; transition: 0.3s;
+        }
+        .step-card:hover { border-color: var(--primary-color); box-shadow: var(--glow); transform: translateY(-5px); }
+
+        .step-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3em; color: rgba(0, 255, 65, 0.1);
+            position: absolute; top: 10px; right: 20px; font-weight: 700;
+        }
+
+        .step-card h3 { font-family: 'Orbitron', sans-serif; color: var(--primary-color); margin-bottom: 0.5em; text-transform: uppercase; }
+        .step-card p { color: var(--text-muted); line-height: 1.6; font-size: 1.1em; }
+        
+        .arrow-down { text-align: center; color: var(--primary-color); font-size: 2em; grid-column: 1 / -1; display: none; }
+        @media (min-width: 768px) { .arrow-down { display: block; } }
+
+        nav { background: rgba(0, 0, 0, 0.6); padding: 1.5em; display: flex; justify-content: center; gap: 2em; border-top: 1px solid rgba(0, 255, 65, 0.1); flex-wrap: wrap; }
+        nav a { text-decoration: none; color: var(--text-muted); font-family: 'Orbitron', sans-serif; font-size: 0.9em; text-transform: uppercase; padding: 0.8em 1.5em; transition: 0.3s; letter-spacing: 1px; }
+        nav a:hover { color: var(--primary-color); text-shadow: var(--glow); }
+        nav a.active { background: var(--primary-color); color: black; font-weight: 700; box-shadow: var(--glow); }
+        
+        /* Scanline */
+        body::before { content: " "; display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); z-index: 2; background-size: 100% 2px, 3px 100%; pointer-events: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>System Architecture</h1>
+        </header>
+
+        <main class="main-content">
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <h3>Initialize</h3>
+                    <p>The server asks the OS for a communication endpoint using <code>socket()</code>. It then 'Binds' this endpoint to <strong>Port 8080</strong> on the localhost, effectively staking a claim on that digital address.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <h3>Listen Mode</h3>
+                    <p>The system enters a blocking state using <code>listen()</code>. It creates a backlog queue and actively monitors for incoming TCP connection SYN packets from any client browser.</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <h3>Data Parsing</h3>
+                    <p>Upon a successful 3-way handshake, the connection is <code>accepted</code>. The server reads the raw byte stream into a buffer and parses the HTTP Header to extract the specific resource path (e.g., <code>GET /index.html</code>).</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">04</div>
+                    <h3>Transmission</h3>
+                    <p>The requested file is loaded from the disk into memory. The server constructs a compliant HTTP/1.1 Response Header (Status 200) and flushes the data stream back through the socket to the client.</p>
+                </div>
+            </div>
+        </main>
+
+        <nav>
+            <a href="/">Main</a>
+            <a href="/about.html" class="active">Logic</a>
+            <a href="/code.html">Code</a>
+            <a href="/ai_tutor.html">AI-Link</a>
+            <a href="/future_scope.html">Future</a>
+            <a href="/thankyou.html">End</a>
+        </nav>
+    </div>
+</body>
+</html>
